@@ -17,7 +17,7 @@ const UserSchema = mongoose.Schema({
   },
 });
 
-// Hasing user password before saving to DB
+// Hashing user password before saving to DB
 // using mongoose hooks on creation
 UserSchema.pre("save", async function (next) {
   try {
@@ -28,6 +28,22 @@ UserSchema.pre("save", async function (next) {
     console.error(e);
   }
 });
+
+// Static method to log in user
+UserSchema.static.login = async function (email, password) {
+  const user = await this.findOne({ email });
+
+  if (user) {
+    const auth = await bcrypt.compare(password, user.password);
+
+    if (auth) {
+      return user;
+    }
+    throw Error("Invalid password");
+  }
+
+  throw Error("Invalid email");
+};
 
 const User = mongoose.model("user", UserSchema);
 

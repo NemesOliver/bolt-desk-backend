@@ -1,6 +1,13 @@
 const User = require("../../models/User");
 const { handleErrors } = require("../libs/handleErrors");
 
+// jwt token creation
+const jwt = require("jsonwebtoken");
+const maxAge = 3 * 24 * 60 * 60; // 3 days in seconds
+const createToken = (id) => {
+  return jwt.sign({ id }, "secret string", { expiresIn: maxAge });
+};
+
 // GET ALL USERS
 /**
  * Fetch all users from database
@@ -43,11 +50,35 @@ module.exports.create_user = async (req, res) => {
 
   try {
     const user = await User.create({ email, password });
+    // create jwt token
+    const token = createToken(user._id);
+    // save jwt in cookies
+    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
 
-    res.status(201).json(user);
+    res.status(201).json({ user: { _id: user._id, email: user.email } });
   } catch (e) {
     const errors = handleErrors(e, { email: "", password: "" }, "email");
     res.status(400).json({ errors });
+  }
+};
+
+// LOGIN USER
+/**
+ * Authenticates user and sets JWT token in http only cookies
+ *
+ */
+module.exports.login_user = async (req, res) => {
+  const _id = req.params.id;
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.login(email, password);
+    const token = createToken(_id);
+    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
+
+    res.status(200).json({ user: { _id: user._id, email: user.email } });
+  } catch (e) {
+    res.status(403).json({});
   }
 };
 
