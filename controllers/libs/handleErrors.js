@@ -1,11 +1,12 @@
 /**
  * Customize validation errors
- * @param {*} err
+ * @param {*} err 
+ * @param {*} customErrorObj Object containing fields you want to validate based on your schema
  * @returns err object containing custom messages
  */
 
-module.exports.handleErrors = (err) => {
-  let errors = { name: "" };
+module.exports.handleErrors = (err, customErrorObj) => {
+  let errors = customErrorObj;
 
   // duplicate email error
   if (err.code === 11000) {

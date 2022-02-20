@@ -17,10 +17,15 @@ app.use(cors());
 
 // PORT
 const PORT = process.env.PORT || 5000;
-
 app.listen(PORT, console.log(`Server started on port ${PORT}`));
 
 // ROUTES
+const version = "v1";
+
 // Desks
 const DesksRoute = require("./routes/Desks");
-app.use("/v1/desks", DesksRoute);
+app.use(`/${version}/desks`, DesksRoute);
+
+// Users
+const UsersRoute = require("./routes/Users");
+app.use(`/${version}/users`, UsersRoute);

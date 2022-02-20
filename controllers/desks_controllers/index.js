@@ -1,6 +1,7 @@
 const Desk = require("../../models/Desk");
-const validation = require("./libs/handleErrors");
+const { handleErrors } = require("../libs/handleErrors");
 
+// GET ALL DESKS
 module.exports.fetch_desks = async (req, res) => {
   try {
     const desks = await Desk.find();
@@ -11,6 +12,7 @@ module.exports.fetch_desks = async (req, res) => {
   }
 };
 
+// GET SINGLE DESK
 module.exports.fetch_desk = async (req, res) => {
   try {
     const desk = await Desk.findById({ _id: req.params.id });
@@ -21,6 +23,7 @@ module.exports.fetch_desk = async (req, res) => {
   }
 };
 
+// CREATE NEW DESK
 module.exports.create_desk = async (req, res) => {
   try {
     const newDesk = new Desk(req.body);
@@ -28,11 +31,12 @@ module.exports.create_desk = async (req, res) => {
 
     res.status(201).json(savedDesk);
   } catch (e) {
-    const errors = validation.handleErrors(e);
+    const errors = handleErrors(e, { name: "" });
     res.status(400).json({ errors });
   }
 };
 
+// UPDATE EXISTING DESK
 module.exports.update_desk = async (req, res) => {
   try {
     const desk = await Desk.findByIdAndUpdate(
@@ -45,11 +49,12 @@ module.exports.update_desk = async (req, res) => {
 
     res.status(200).json(desk);
   } catch (e) {
-    const errors = validation.handleErrors(e);
+    const errors = handleErrors(e, { name: "" });
     res.status(400).json({ errors });
   }
 };
 
+// DELETE DESK
 module.exports.delete_desk = async (req, res) => {
   try {
     const result = await Desk.findByIdAndDelete(req.params.id);

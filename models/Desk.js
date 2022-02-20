@@ -9,7 +9,6 @@ const DeskSchema = mongoose.Schema({
   },
   is_booked: {
     type: Boolean,
-    required: true,
     default: false,
   },
   booked_by: {
