@@ -31,7 +31,7 @@ module.exports.create_desk = async (req, res) => {
 
     res.status(201).json(savedDesk);
   } catch (e) {
-    const errors = handleErrors(e, { name: "" });
+    const errors = handleErrors(e, { name: "" }, "name");
     res.status(400).json({ errors });
   }
 };
@@ -49,7 +49,7 @@ module.exports.update_desk = async (req, res) => {
 
     res.status(200).json(desk);
   } catch (e) {
-    const errors = handleErrors(e, { name: "" });
+    const errors = handleErrors(e, { name: "" }, "name");
     res.status(400).json({ errors });
   }
 };

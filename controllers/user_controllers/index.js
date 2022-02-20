@@ -16,7 +16,7 @@ module.exports.create_user = async (req, res) => {
 
     res.status(201).json(user);
   } catch (e) {
-    const errors = handleErrors(e, { email: "", password: "" });
+    const errors = handleErrors(e, { email: "", password: "" }, "email");
     res.status(400).json({ errors });
   }
 };
