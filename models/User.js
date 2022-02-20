@@ -18,7 +18,7 @@ const UserSchema = mongoose.Schema({
 });
 
 // Hasing user password before saving to DB
-// using mongoose hooks
+// using mongoose hooks on creation
 UserSchema.pre("save", async function (next) {
   try {
     const salt = await bcrypt.genSalt();
