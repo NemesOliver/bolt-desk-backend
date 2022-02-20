@@ -1,6 +1,6 @@
 require("dotenv").config();
 const User = require("../../models/User");
-const { handleErrors } = require("../libs/handleErrors");
+const handleUserValidationErrors = require("./libs/handleUserValidationErrors");
 
 // jwt token creation
 const jwt = require("jsonwebtoken");
@@ -58,7 +58,7 @@ module.exports.create_user = async (req, res) => {
 
     res.status(201).json({ user: { _id: user._id, email: user.email } });
   } catch (e) {
-    const errors = handleErrors(e, { email: "", password: "" }, "email");
+    const errors = handleUserValidationErrors(e);
     res.status(400).json({ errors });
   }
 };
@@ -96,7 +96,7 @@ module.exports.update_user = async (req, res) => {
 
     res.status(200).json(user);
   } catch (e) {
-    const errors = handleErrors(e, { email: "" }, "email");
+    const errors = handleUserValidationErrors(e);
     res.status(400).json({ errors });
   }
 };

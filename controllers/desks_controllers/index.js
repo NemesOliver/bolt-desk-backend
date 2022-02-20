@@ -1,5 +1,5 @@
 const Desk = require("../../models/Desk");
-const { handleErrors } = require("../libs/handleErrors");
+const handleDeskValidationErrors = require("./libs/handleDeskValidationErrors");
 
 // GET ALL DESKS
 module.exports.fetch_desks = async (req, res) => {
@@ -31,7 +31,7 @@ module.exports.create_desk = async (req, res) => {
 
     res.status(201).json(savedDesk);
   } catch (e) {
-    const errors = handleErrors(e, { name: "" }, "name");
+    const errors = handleDeskValidationErrors(e);
     res.status(400).json({ errors });
   }
 };
@@ -49,7 +49,7 @@ module.exports.update_desk = async (req, res) => {
 
     res.status(200).json(desk);
   } catch (e) {
-    const errors = handleErrors(e, { name: "" }, "name");
+    const errors = handleDeskValidationErrors(e);
     res.status(400).json({ errors });
   }
 };
