@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 // const path = require("path")
 require("dotenv").config();
 
@@ -10,8 +11,9 @@ connectDB();
 // Instantiate express app
 const app = express();
 
-// Body parser
+// Middlewares
 app.use(express.json());
+app.use(cors());
 
 // PORT
 const PORT = process.env.PORT || 5000;
@@ -19,6 +21,6 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, console.log(`Server started on port ${PORT}`));
 
 // ROUTES
-// Dishes
+// Desks
 const DesksRoute = require("./routes/Desks");
 app.use("/v1/desks", DesksRoute);
