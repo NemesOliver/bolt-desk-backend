@@ -1,17 +1,6 @@
 const Desk = require("../../models/Desk");
 const handleDeskValidationErrors = require("./libs/handleDeskValidationErrors");
 
-// GET ALL DESKS
-module.exports.fetch_desks = async (req, res) => {
-  try {
-    const desks = await Desk.find();
-
-    res.status(200).json(desks);
-  } catch (e) {
-    res.status(400).json(e.message);
-  }
-};
-
 // GET SINGLE DESK
 module.exports.fetch_desk = async (req, res) => {
   try {
@@ -20,6 +9,17 @@ module.exports.fetch_desk = async (req, res) => {
     res.status(200).json(desk);
   } catch (e) {
     res.status(400).json(e);
+  }
+};
+
+// GET ALL DESKS
+module.exports.fetch_desks = async (req, res) => {
+  try {
+    const desks = await Desk.find();
+
+    res.status(200).json(desks);
+  } catch (e) {
+    res.status(400).json(e.message);
   }
 };
 

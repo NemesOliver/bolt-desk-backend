@@ -1,15 +1,15 @@
 const express = require("express");
 const deskController = require("../../controllers/desks_controllers");
-
+const { requireAuth } = require("../../middleware/authMiddleware");
 const router = express.Router();
-
-// GET
-// Fetch all desks
-router.get("/", deskController.fetch_desks);
 
 // GET
 // Fetch single desk
 router.get("/:id", deskController.fetch_desk);
+
+// GET
+// Fetch all desks
+router.get("/", requireAuth, deskController.fetch_desks);
 
 // POST
 // Create new desk

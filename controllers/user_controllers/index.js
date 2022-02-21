@@ -6,7 +6,7 @@ const handleUserValidationErrors = require("./libs/handleUserValidationErrors");
 const jwt = require("jsonwebtoken");
 const maxAge = 3 * 24 * 60 * 60; // 3 days in seconds
 const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: maxAge });
+  return jwt.sign({ id }, "secret", { expiresIn: maxAge });
 };
 
 // GET ALL USERS
@@ -75,11 +75,14 @@ module.exports.login_user = async (req, res) => {
   try {
     const user = await User.login(email, password);
     const token = createToken(_id);
-    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      maxAge: maxAge * 1000,
+    });
 
     res.status(200).json({ user: { _id: user._id, email: user.email } });
   } catch (e) {
-    res.status(403).json({});
+    res.status(403).json(e.message);
   }
 };
 
