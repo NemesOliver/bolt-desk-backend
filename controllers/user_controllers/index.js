@@ -1,12 +1,12 @@
-require("dotenv").config();
 const User = require("../../models/User");
 const handleUserValidationErrors = require("./libs/handleUserValidationErrors");
+const config = require("../../config/config");
 
 // jwt token creation
 const jwt = require("jsonwebtoken");
 const maxAge = 3 * 24 * 60 * 60; // 3 days in seconds
 const createToken = (id) => {
-  return jwt.sign({ id }, "secret", { expiresIn: maxAge });
+  return jwt.sign({ id }, config.jwtSecretKey, { expiresIn: maxAge });
 };
 
 // GET ALL USERS
