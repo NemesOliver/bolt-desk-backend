@@ -6,7 +6,7 @@ const { requireAuth } = require("./middleware/authMiddleware");
 
 // CORS options
 const corsOptions = {
-  origin: "http://localhost:3000", // Your FE domain/origin must be set to allow cookies to be set
+  origin: true, // Your FE domain/origin must be set to allow cookies to be set
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };
@@ -18,6 +18,8 @@ connectDB();
 
 // Instantiate express app
 const app = express();
+
+app.set("trust proxy");
 
 // Middlewares
 app.use(express.json());
