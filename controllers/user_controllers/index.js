@@ -47,15 +47,15 @@ module.exports.get_user = async (req, res) => {
  * @param {*} res
  */
 module.exports.create_user = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, name } = req.body;
 
   try {
-    const user = await User.create({ email, password });
+    const user = await User.create({ email, password, name });
     // create jwt token
     const token = createToken(user._id);
     // save jwt in cookies
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-
+    // copy cookies from login
     res.status(201).json({ user: { _id: user._id, email: user.email } });
   } catch (e) {
     const errors = handleUserValidationErrors(e);
@@ -75,14 +75,13 @@ module.exports.login_user = async (req, res) => {
   try {
     const user = await User.login(email, password);
     const token = createToken(_id);
-    res.cookie("jwt", token, {
-      httpOnly: true,
-      maxAge: maxAge * 1000,
-    });
+    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.cookie("auth", true, { maxAge: maxAge * 1000 });
+    res.cookie("user", user._id.toString(), { maxAge: maxAge * 1000 });
 
     res.status(200).json({ user: { _id: user._id, email: user.email } });
   } catch (e) {
-    res.status(403).json(e.message);
+    res.status(403).json(e);
   }
 };
 

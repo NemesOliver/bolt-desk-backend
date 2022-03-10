@@ -15,6 +15,11 @@ const UserSchema = mongoose.Schema({
     required: [true, "Please enter a password"],
     minlength: [6, "Minimum password length is 6 characters"],
   },
+  name: {
+    type: String,
+    required: [true, "Please enter your name"],
+    minlength: [3, "Minimum length is 3 characters"],
+  },
 });
 
 // Hashing user password before saving to DB

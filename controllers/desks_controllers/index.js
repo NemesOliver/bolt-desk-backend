@@ -4,7 +4,7 @@ const handleDeskValidationErrors = require("./libs/handleDeskValidationErrors");
 // GET SINGLE DESK
 module.exports.fetch_desk = async (req, res) => {
   try {
-    const desk = await Desk.findById({ _id: req.params.id });
+    const desk = await Desk.findById({ _id: req.params.id }); 
 
     res.status(200).json(desk);
   } catch (e) {
@@ -53,6 +53,7 @@ module.exports.update_desk = async (req, res) => {
     res.status(400).json({ errors });
   }
 };
+
 
 // DELETE DESK
 module.exports.delete_desk = async (req, res) => {

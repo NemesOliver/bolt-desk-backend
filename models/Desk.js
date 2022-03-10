@@ -7,14 +7,7 @@ const DeskSchema = mongoose.Schema({
     minlength: [4, "Name has to be at least 4 characters"],
     unique: true,
   },
-  is_booked: {
-    type: Boolean,
-    default: false,
-  },
-  booked_by: {
-    type: String,
-    default: "",
-  },
+ 
 });
 
 module.exports = mongoose.model("Desk", DeskSchema);

@@ -9,7 +9,7 @@ router.get("/:id", deskController.fetch_desk);
 
 // GET
 // Fetch all desks
-router.get("/", requireAuth, deskController.fetch_desks);
+router.get("/", deskController.fetch_desks);
 
 // POST
 // Create new desk

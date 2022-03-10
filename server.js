@@ -2,6 +2,7 @@ require("dotenv").config({ path: "./.env" });
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const { requireAuth } = require("./middleware/authMiddleware");
 
 // CORS options
 const corsOptions = {
@@ -32,8 +33,13 @@ const version = "v1";
 
 // Users
 const UsersRoute = require("./routes/Users");
-app.use(`/${version}/users`, UsersRoute);
+app.use(`/${version}/users`, requireAuth, UsersRoute);
 
 // Desks
 const DesksRoute = require("./routes/Desks");
-app.use(`/${version}/desks`, DesksRoute);
+app.use(`/${version}/desks`, requireAuth, DesksRoute);
+
+// Bookings
+const BookingsRoute = require("./routes/bookings");
+
+app.use(`/${version}/bookings`, requireAuth, BookingsRoute);
