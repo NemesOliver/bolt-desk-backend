@@ -33,7 +33,7 @@ const version = "v1";
 
 // Users
 const UsersRoute = require("./routes/users");
-app.use(`/${version}/users`, requireAuth, UsersRoute);
+app.use(`/${version}/users`, UsersRoute);
 
 // Desks
 const DesksRoute = require("./routes/desks");
