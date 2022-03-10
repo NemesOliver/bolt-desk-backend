@@ -4,9 +4,10 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const { requireAuth } = require("./middleware/authMiddleware");
 
+const origin = process.env.ORIGIN || "http://localhost:3000";
 // CORS options
 const corsOptions = {
-  origin: true, // Your FE domain/origin must be set to allow cookies to be set
+  origin: origin, // Your FE domain/origin must be set to allow cookies to be set
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };
@@ -19,7 +20,7 @@ connectDB();
 // Instantiate express app
 const app = express();
 
-app.set("trust proxy");
+app.set("trust proxy", 1);
 
 // Middlewares
 app.use(express.json());
