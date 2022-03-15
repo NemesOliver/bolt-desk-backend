@@ -4,7 +4,10 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const { requireAuth } = require("./middleware/authMiddleware");
 
-const origin = process.env.ORIGIN || "http://localhost:3000";
+const origin = process.env.ORIGIN || [
+  "http://192.168.0.24:3000",
+  "http://localhost:3000",
+];
 // CORS options
 const corsOptions = {
   origin: origin, // Your FE domain/origin must be set to allow cookies to be set
@@ -25,7 +28,7 @@ app.set("trust proxy", 1);
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors(corsOptions));
+app.use(cors());
 
 // PORT
 const PORT = process.env.PORT || 5000;
