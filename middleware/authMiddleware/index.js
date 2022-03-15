@@ -7,7 +7,7 @@ const requireAuth = (req, res, next) => {
   // Header token set to use with next.js
   // token is set on header, because for some reason even with { withCredentials: true }
   // cookie was not sent to server
-  const headerToken = req.headers.authorization;
+  const headerToken = req.headers.authorization.substring(7);
 
   // check json web token exists & is verified
   if (token || headerToken) {
